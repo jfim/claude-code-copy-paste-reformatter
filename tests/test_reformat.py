@@ -1,4 +1,4 @@
-from clipboard_reformatter.reformat import strip_trailing_spaces
+from claude_code_copy_paste_reformatter.reformat import strip_trailing_spaces
 
 
 def test_strips_trailing_spaces_from_single_line():

@@ -2,7 +2,7 @@ version = 1
 requires-python = ">=3.12"
 
 [[package]]
-name = "clipboard-reformatter"
+name = "claude-code-copy-paste-reformatter"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

@@ -4,7 +4,7 @@ import time
 
 import pyperclip
 
-from clipboard_reformatter.reformat import strip_trailing_spaces
+from claude_code_copy_paste_reformatter.reformat import strip_trailing_spaces
 
 POLL_INTERVAL_S = 0.3
 
@@ -49,9 +49,9 @@ class ClipboardWatcher:
                 try:
                     self._tick()
                 except pyperclip.PyperclipException as e:
-                    print(f"clipboard-reformatter: clipboard error: {e}", file=sys.stderr)
+                    print(f"claude-code-copy-paste-reformatter: clipboard error: {e}", file=sys.stderr)
                 except Exception as e:
-                    print(f"clipboard-reformatter: unexpected error: {e!r}", file=sys.stderr)
+                    print(f"claude-code-copy-paste-reformatter: unexpected error: {e!r}", file=sys.stderr)
             self._stop.wait(POLL_INTERVAL_S)
 
     def _tick(self) -> None:

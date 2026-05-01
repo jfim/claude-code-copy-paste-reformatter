@@ -1,7 +1,7 @@
 from PIL import Image, ImageDraw
 import pystray
 
-from clipboard_reformatter.watcher import ClipboardWatcher
+from claude_code_copy_paste_reformatter.watcher import ClipboardWatcher
 
 ICON_SIZE = 64
 
@@ -41,7 +41,7 @@ def build_tray(watcher: ClipboardWatcher) -> pystray.Icon:
     )
 
     return pystray.Icon(
-        name="clipboard-reformatter",
+        name="claude-code-copy-paste-reformatter",
         icon=_make_icon_image(),
         title="Clipboard Reformatter",
         menu=menu,

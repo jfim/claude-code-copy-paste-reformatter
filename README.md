@@ -1,4 +1,4 @@
-# clipboard-reformatter
+# claude-code-copy-paste-reformatter
 
 A small Linux/macOS systray app that strips trailing spaces from every line of
 any text copied to the clipboard.
@@ -22,10 +22,10 @@ matching the system Python version and using `--system-site-packages`:
 ```bash
 uv venv --system-site-packages --python /usr/bin/python3
 uv sync
-uv run clipboard-reformatter
+uv run claude-code-copy-paste-reformatter
 ```
 
-On macOS, `uv sync && uv run clipboard-reformatter` is enough — no system
+On macOS, `uv sync && uv run claude-code-copy-paste-reformatter` is enough — no system
 packages or `--system-site-packages` needed.
 
 ## Usage

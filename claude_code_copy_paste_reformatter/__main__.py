@@ -4,8 +4,8 @@ import tkinter.messagebox
 
 import pyperclip
 
-from clipboard_reformatter.tray import build_tray
-from clipboard_reformatter.watcher import ClipboardWatcher
+from claude_code_copy_paste_reformatter.tray import build_tray
+from claude_code_copy_paste_reformatter.watcher import ClipboardWatcher
 
 
 def _show_startup_error(message: str) -> None:
