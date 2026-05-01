@@ -14,18 +14,24 @@ tray with a minimal menu (toggle on/off, quit).
 
 ## Platform
 
-- Target: Linux / X11 (developer is on Ubuntu GNOME + X11).
-- System dependencies the user must have:
+Supported: **Linux (X11)** and **macOS**.
+
+- **Linux / X11** (developer is on Ubuntu GNOME + X11):
   - `xclip` (or `xsel`) — pyperclip shells out to it.
   - GNOME **AppIndicator Support** extension — otherwise the tray icon will not appear under GNOME.
+- **macOS**:
+  - No extra system deps — pyperclip uses built-in `pbcopy`/`pbpaste`; pystray uses the native status bar.
+
+Wayland is out of scope for v1.
 
 ## Stack
 
 - Python 3.11+
 - `uv` for project/dependency management
 - `pyperclip` — clipboard read/write
-- `pystray` — system tray icon and menu
+- `pystray` — system tray / macOS status bar icon and menu
 - `Pillow` — generate the tray icon image
+- `tkinter` (stdlib) — for the startup error message box (cross-platform)
 - Standard `threading` — background poll loop
 - `pytest` — unit tests for the pure reformat function
 
@@ -72,6 +78,15 @@ def strip_trailing_spaces(text: str) -> str:
 ### `__main__.py`
 ```python
 def main():
+    # Startup probe: one clipboard read. If this fails, show a dialog and exit.
+    try:
+        pyperclip.paste()
+    except Exception as e:
+        import tkinter, tkinter.messagebox
+        root = tkinter.Tk(); root.withdraw()
+        tkinter.messagebox.showerror("Clipboard Reformatter", f"Cannot access clipboard:\n\n{e}")
+        sys.exit(1)
+
     watcher = ClipboardWatcher()
     watcher.start()
     icon = build_tray(watcher)
@@ -104,11 +119,19 @@ last_seen = cleaned   (prevents re-processing our own write)
 
 ## Error Handling
 
-- `pyperclip.PyperclipException` (e.g. xclip missing): log to stderr, sleep,
-  retry on next tick. Don't crash the tray.
-- Any other exception inside the loop: log and continue. The watcher must not
-  die silently — a tray app that has stopped working is worse than one that is
-  visibly off.
+**Startup probe.** Before starting the watcher thread or showing the tray icon,
+`__main__.py` performs a single `pyperclip.paste()` call. If it raises, we show
+a modal error dialog (via `tkinter.messagebox.showerror`) containing the
+exception message — typically pointing the user at missing `xclip`/`xsel` on
+Linux — and exit with a non-zero status. This makes first-run setup problems
+immediately visible instead of leaving a silent tray icon.
+
+**Runtime.** Once past the startup probe, exceptions inside the polling loop
+are logged to stderr and the loop continues:
+
+- `pyperclip.PyperclipException`: log and retry on next tick.
+- Any other exception: log and continue. The watcher must not die silently —
+  a tray app that has stopped working is worse than one that is visibly off.
 
 ## Testing
 
@@ -144,6 +167,7 @@ clipboard-reformatter/
 ## Out of Scope (v1)
 
 - Wayland support
+- Windows support
 - Hotkey trigger / manual mode
 - Other reformat rules (case, JSON, etc.)
 - Persisting "enabled" state across restarts
