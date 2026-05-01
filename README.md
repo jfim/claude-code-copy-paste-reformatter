@@ -42,7 +42,9 @@ The icon appears in the system tray / status bar. Anything you copy to the
 clipboard has trailing spaces stripped from each line, in place.
 
 Menu:
-- **Enabled** — toggle stripping on/off.
+- **Reformat clipboard** — checkable; toggles stripping on/off.
+- **About** — shows a native About dialog (NSAlert on macOS,
+  `Gtk.AboutDialog` on Linux, `MessageBoxW` on Windows).
 - **Quit** — exit the app.
 
 If the clipboard cannot be accessed at startup (e.g. `xclip` not installed),
