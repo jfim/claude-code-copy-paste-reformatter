@@ -1,11 +1,16 @@
-# claude-code-copy-paste-reformatter
+# Claude Code Copy-Paste Reformatter
 
 A small Linux/macOS systray app that strips trailing spaces from every line of
-any text copied to the clipboard.
+any text copied to the clipboard, such as those that occur when copy-pasting
+from Claude Code.
+
+**This is not an Anthropic project.**
+
+100% vibe ~~coded~~ engineered.
 
 ## Requirements
 
-- Python 3.12+ (on Linux, the system Python; see note below)
+- Python 3.12+ (on Linux, the system Python; see Linux install section below)
 - [uv](https://docs.astral.sh/uv/)
 - **Linux only:** `xclip` or `xsel` (`sudo apt install xclip`)
 - **GNOME only:** the [AppIndicator Support](https://extensions.gnome.org/extension/615/appindicator-support/)
@@ -16,6 +21,12 @@ any text copied to the clipboard.
 
 ## Install / Run
 
+### macOS
+
+`uv sync && uv run claude-code-copy-paste-reformatter`
+
+### Linux
+
 On Linux the venv must be able to see the system `python3-gi`, which means
 matching the system Python version and using `--system-site-packages`:
 
@@ -24,9 +35,6 @@ uv venv --system-site-packages --python /usr/bin/python3
 uv sync
 uv run claude-code-copy-paste-reformatter
 ```
-
-On macOS, `uv sync && uv run claude-code-copy-paste-reformatter` is enough — no system
-packages or `--system-site-packages` needed.
 
 ## Usage
 
@@ -46,3 +54,7 @@ a dialog with the error appears and the app exits.
 uv sync
 uv run pytest
 ```
+
+## License
+
+MIT
