@@ -1,6 +1,7 @@
 import pystray
 from PIL import Image, ImageDraw
 
+from claude_code_copy_paste_reformatter.about import show_about
 from claude_code_copy_paste_reformatter.watcher import ClipboardWatcher
 
 ICON_SIZE = 64
@@ -33,16 +34,19 @@ def build_tray(watcher: ClipboardWatcher) -> pystray.Icon:
         watcher.set_enabled(not watcher.enabled)
         icon.update_menu()
 
+    def on_about(icon: pystray.Icon, item: pystray.MenuItem) -> None:
+        show_about()
+
     def on_quit(icon: pystray.Icon, item: pystray.MenuItem) -> None:
         watcher.stop()
         icon.stop()
 
     menu = pystray.Menu(
         pystray.MenuItem(
-            "Enabled",
+            lambda item: "Enabled" if watcher.enabled else "Disabled",
             on_toggle_enabled,
-            checked=lambda item: watcher.enabled,
         ),
+        pystray.MenuItem("About", on_about),
         pystray.MenuItem("Quit", on_quit),
     )
 
