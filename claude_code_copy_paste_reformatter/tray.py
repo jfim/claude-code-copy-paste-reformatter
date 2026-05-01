@@ -1,5 +1,5 @@
-from PIL import Image, ImageDraw
 import pystray
+from PIL import Image, ImageDraw
 
 from claude_code_copy_paste_reformatter.watcher import ClipboardWatcher
 
@@ -11,7 +11,13 @@ def _make_icon_image() -> Image.Image:
     img = Image.new("RGBA", (ICON_SIZE, ICON_SIZE), (30, 30, 30, 255))
     draw = ImageDraw.Draw(img)
     # A thick arc that reads as a 'C' for clipboard.
-    draw.arc((10, 10, ICON_SIZE - 10, ICON_SIZE - 10), start=40, end=320, fill=(220, 220, 220, 255), width=8)
+    draw.arc(
+        (10, 10, ICON_SIZE - 10, ICON_SIZE - 10),
+        start=40,
+        end=320,
+        fill=(220, 220, 220, 255),
+        width=8,
+    )
     return img
 
 
