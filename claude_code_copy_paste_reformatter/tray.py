@@ -43,9 +43,11 @@ def build_tray(watcher: ClipboardWatcher) -> pystray.Icon:
 
     menu = pystray.Menu(
         pystray.MenuItem(
-            lambda item: "Enabled" if watcher.enabled else "Disabled",
+            "Reformat clipboard",
             on_toggle_enabled,
+            checked=lambda item: watcher.enabled,
         ),
+        pystray.Menu.SEPARATOR,
         pystray.MenuItem("About", on_about),
         pystray.MenuItem("Quit", on_quit),
     )
