@@ -5,8 +5,20 @@ def test_strips_trailing_spaces_from_single_line():
     assert strip_trailing_spaces("hello   ") == "hello"
 
 
-def test_leaves_leading_spaces_alone():
-    assert strip_trailing_spaces("    hello") == "    hello"
+def test_strips_two_leading_spaces():
+    assert strip_trailing_spaces("    hello") == "  hello"
+
+
+def test_strips_exactly_two_leading_spaces():
+    assert strip_trailing_spaces("  hello") == "hello"
+
+
+def test_leaves_single_leading_space_alone():
+    assert strip_trailing_spaces(" hello") == " hello"
+
+
+def test_strips_two_leading_spaces_per_line():
+    assert strip_trailing_spaces("  a\n    b\n c") == "a\n  b\n c"
 
 
 def test_strips_per_line_in_multiline_text():
